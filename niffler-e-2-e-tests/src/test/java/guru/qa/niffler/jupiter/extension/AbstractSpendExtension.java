@@ -12,7 +12,7 @@ import org.junit.platform.commons.support.AnnotationSupport;
 
 import java.util.Date;
 
-public class SpendExtension implements BeforeEachCallback, ParameterResolver {
+public abstract class AbstractSpendExtension implements BeforeEachCallback, ParameterResolver {
 
     public static final ExtensionContext.Namespace NAMESPACE
             = ExtensionContext.Namespace.create(SpendExtension.class);
@@ -23,7 +23,7 @@ public class SpendExtension implements BeforeEachCallback, ParameterResolver {
     @Override
     public void beforeEach(ExtensionContext extensionContext){
         CategoryJson categoryJson = extensionContext.getStore(CategoriesExtension.NAMESPACE).get("category", CategoryJson.class);
-                 AnnotationSupport.findAnnotation(
+        AnnotationSupport.findAnnotation(
                 extensionContext.getRequiredTestMethod(),
                 GenerateSpend.class
         ).ifPresent(
@@ -55,4 +55,6 @@ public class SpendExtension implements BeforeEachCallback, ParameterResolver {
         return extensionContext.getStore(NAMESPACE).get("spend");
     }
 
+    protected abstract SpendJson createSpend(SpendJson spend);
+    protected abstract void removeCategory(SpendJson spend);
 }

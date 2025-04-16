@@ -1,35 +1,34 @@
 package guru.qa.niffler.page;
 
+
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
-public class WelcomePage extends BasePage<WelcomePage> {
+public class WelcomePage {
+    private SelenideElement loginBtn = $("a[href*='redirect']"),
+    registerBtn = $("a[href*='register']");
 
-    public static final String URL = CFG.frontUrl();
+    @Step("Open Welcome Page")
+    public WelcomePage open(){
+        Selenide.open("http://127.0.0.1:3000/");
+        return this;
+    }
 
-    private final SelenideElement loginButton = $("a[href*='redirect']");
-    private final SelenideElement registerButton = $("a[href*='register']");
 
-    @Step("Redirect to login page")
-    public LoginPage doLogin() {
-        loginButton.click();
+    @Step("Redirect to Register Page")
+    public LoginPage clickLoginBtn(){
+        loginBtn.click();
         return new LoginPage();
     }
 
-    @Step("Redirect to register page")
-    public RegisterPage doRegister() {
-        registerButton.click();
+    @Step("Redirect to Register Page")
+    public RegisterPage clickRegisterBtn(){
+        registerBtn.click();
         return new RegisterPage();
     }
 
-    @Step("Check that page is loaded")
-    @Override
-    public WelcomePage waitForPageLoaded() {
-        loginButton.should(visible);
-        registerButton.should(visible);
-        return this;
-    }
+
 }
