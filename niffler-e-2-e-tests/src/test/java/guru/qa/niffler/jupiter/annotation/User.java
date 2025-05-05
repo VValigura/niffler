@@ -1,17 +1,16 @@
 package guru.qa.niffler.jupiter.annotation;
 
-
-import guru.qa.niffler.model.CurrencyValues;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Spend {
-    CurrencyValues currency();
-    double amount();
-    String description();
+@Target(ElementType.PARAMETER)
+public @interface User {
+    Selector selector() default Selector.SIMPLE_USER;;
+
+    enum Selector{
+        INVITATION_SEND, INVITATION_RECIEVED, WITH_FRIENDS, SIMPLE_USER
+    }
 }

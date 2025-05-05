@@ -11,6 +11,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class CategoryExtension implements BeforeEachCallback {
+
+    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(CategoryExtension.class);
+
     private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .build();
 
@@ -36,6 +39,7 @@ public class CategoryExtension implements BeforeEachCallback {
             );
             try {
                 CategoryJson result = spendApi.createCategory(categoryJson).execute().body();
+                extensionContext.getStore(NAMESPACE).put("category", result);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

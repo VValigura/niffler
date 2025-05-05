@@ -2,6 +2,7 @@ package guru.qa.niffler.jupiter.extension;
 
 import guru.qa.niffler.api.SpendApi;
 import guru.qa.niffler.jupiter.annotation.Spend;
+import guru.qa.niffler.model.CategoryJson;
 import guru.qa.niffler.model.SpendJson;
 import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.extension.*;
@@ -28,6 +29,9 @@ public class SpendExtension implements BeforeEachCallback, ParameterResolver{
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         SpendApi spendApi = retrofit.create(SpendApi.class);
+
+        CategoryJson category = extensionContext.getStore(CategoryExtension.NAMESPACE).get("category", CategoryJson.class);
+
         AnnotationSupport.findAnnotation(
                 extensionContext.getRequiredTestMethod(),
                 Spend.class
@@ -35,11 +39,11 @@ public class SpendExtension implements BeforeEachCallback, ParameterResolver{
             SpendJson spendJson = new SpendJson(
                     null,
                     new Date(),
-                    spend.category(),
+                    category.category(),
                     spend.currency(),
                     spend.amount(),
                     spend.description(),
-                    spend.username()
+                    category.username()
             );
             try {
                 SpendJson result = spendApi.createSpend(spendJson).execute().body();

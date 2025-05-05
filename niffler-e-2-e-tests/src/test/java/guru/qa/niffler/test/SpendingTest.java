@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import guru.qa.niffler.jupiter.annotation.Category;
 import guru.qa.niffler.jupiter.annotation.Spend;
+import guru.qa.niffler.jupiter.annotation.meta.WebTest;
 import guru.qa.niffler.jupiter.extension.CategoryExtension;
 import guru.qa.niffler.jupiter.extension.SpendExtension;
 import guru.qa.niffler.model.CurrencyValues;
@@ -17,9 +18,12 @@ import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
-@ExtendWith({CategoryExtension.class, SpendExtension.class})
+@ExtendWith({CategoryExtension.class,
+            SpendExtension.class,
+})
+@WebTest
 public class SpendingTest {
-    static final String userNameTest = "TestUser4";
+    static final String userNameTest = "TestUser6";
     static final String passwordTest = "Gfhfcnfc";
     static final String descriptionTest = "QA.GURU Advanced 5";
     static final double amountTest = 75000.00;
@@ -45,9 +49,7 @@ public class SpendingTest {
     @Spend(
             description = descriptionTest,
             amount = amountTest,
-            currency = CurrencyValues.RUB,
-            username = userNameTest,
-            category = categoryTest
+            currency = CurrencyValues.RUB
     )
     @Test
     void spendingShouldBeDeletedAfterTableAction(SpendJson spendJson) {
