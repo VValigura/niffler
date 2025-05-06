@@ -11,6 +11,8 @@ public @interface User {
     Selector selector() default Selector.SIMPLE_USER;;
 
     enum Selector{
-        INVITATION_SEND, INVITATION_RECIEVED, WITH_FRIENDS, SIMPLE_USER
+        INVITATION_SEND, INVITATION_RECEIVED, WITH_FRIENDS, SIMPLE_USER
     }
 }
+//create method with min max parameters
+

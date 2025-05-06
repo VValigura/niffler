@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 @ExtendWith(UserQueueExtension.class)
 public class FriendsTest {
     @Test
-    void InvitationReseivedTest(@User(selector = User.Selector.INVITATION_RECIEVED) UserJson user) {
+    void InvitationReseivedTest(@User(selector = User.Selector.INVITATION_RECEIVED) UserJson user) {
         MainePage mainePage = new WelcomePage().open()
                 .clickLoginBtn()
                 .setUsername(user.username())

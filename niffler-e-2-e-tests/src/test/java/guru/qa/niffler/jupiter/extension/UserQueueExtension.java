@@ -17,7 +17,7 @@ public class UserQueueExtension implements BeforeEachCallback,
         ParameterResolver {
 
     private static final Queue<UserJson> INVITATION_SEND = new ConcurrentLinkedQueue<>();
-    private static final Queue<UserJson> INVITATION_RECIEVED = new ConcurrentLinkedQueue<>();
+    private static final Queue<UserJson> INVITATION_RECEIVED = new ConcurrentLinkedQueue<>();
     private static final Queue<UserJson> WITH_FRIENDS = new ConcurrentLinkedQueue<>();
     private static final Queue<UserJson> SIMPLE_USER = new ConcurrentLinkedQueue<>();
 
@@ -25,8 +25,8 @@ public class UserQueueExtension implements BeforeEachCallback,
         INVITATION_SEND.add(UserJson.createUser("INVITATION_SEND1", "SEND1"));
         INVITATION_SEND.add(UserJson.createUser("INVITATION_SEND2", "SEND2"));
 
-        INVITATION_RECIEVED.add(UserJson.createUser("INVITATION_RECIEVED1", "RECIEVED1"));
-        INVITATION_RECIEVED.add(UserJson.createUser("INVITATION_RECIEVED2", "RECIEVED2"));
+        INVITATION_RECEIVED.add(UserJson.createUser("INVITATION_RECIEVED1", "RECIEVED1"));
+        INVITATION_RECEIVED.add(UserJson.createUser("INVITATION_RECIEVED2", "RECIEVED2"));
 
         WITH_FRIENDS.add(UserJson.createUser("WITH_FRIENDS1", "FRIENDS1"));
         WITH_FRIENDS.add(UserJson.createUser("WITH_FRIENDS2", "FRIENDS2"));
@@ -51,7 +51,7 @@ public class UserQueueExtension implements BeforeEachCallback,
                     break;
                 case INVITATION_SEND: userJson = INVITATION_SEND.poll();
                     break;
-                case INVITATION_RECIEVED: userJson = INVITATION_RECIEVED.poll();
+                case INVITATION_RECEIVED: userJson = INVITATION_RECEIVED.poll();
                     break;
             }
         }
@@ -81,7 +81,7 @@ public class UserQueueExtension implements BeforeEachCallback,
             case SIMPLE_USER: SIMPLE_USER.add(userJson);
             case WITH_FRIENDS: WITH_FRIENDS.add(userJson);
             case INVITATION_SEND: INVITATION_SEND.add(userJson);
-            case INVITATION_RECIEVED: INVITATION_RECIEVED.add(userJson);
+            case INVITATION_RECEIVED: INVITATION_RECEIVED.add(userJson);
         }
     }
 }
