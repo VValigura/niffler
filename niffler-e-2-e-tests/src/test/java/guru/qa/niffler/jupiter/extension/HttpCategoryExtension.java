@@ -4,15 +4,14 @@ import guru.qa.niffler.api.SpendApi;
 import guru.qa.niffler.jupiter.annotation.Category;
 import guru.qa.niffler.model.CategoryJson;
 import okhttp3.OkHttpClient;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.commons.support.AnnotationSupport;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class CategoryExtension implements BeforeEachCallback {
+public class HttpCategoryExtension extends AbstractCategoryExtension {
 
-    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(CategoryExtension.class);
+    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(HttpCategoryExtension.class);
 
     private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .build();
@@ -26,7 +25,7 @@ public class CategoryExtension implements BeforeEachCallback {
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        SpendApi spendApi = retrofit.create(SpendApi.class);
+
 
         AnnotationSupport.findAnnotation(
                 extensionContext.getRequiredTestMethod(),
@@ -37,12 +36,31 @@ public class CategoryExtension implements BeforeEachCallback {
                     category.category(),
                     category.username()
             );
-            try {
-                CategoryJson result = spendApi.createCategory(categoryJson).execute().body();
-                extensionContext.getStore(NAMESPACE).put("category", result);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            CategoryJson result = createCategory(categoryJson);
+            extensionContext.getStore(NAMESPACE).put("category", result);
+
+
         });
+    }
+
+    @Override
+    protected CategoryJson createCategory(CategoryJson categoryJson) {
+        SpendApi spendApi = retrofit.create(SpendApi.class);
+        try {
+            return spendApi.createCategory(categoryJson).execute().body();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    protected void removeCategory(CategoryJson categoryJson) {
+
+    }
+
+    @Override
+    public void afterEach(ExtensionContext extensionContext) throws Exception {
+
     }
 }

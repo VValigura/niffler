@@ -12,9 +12,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.util.Date;
 
-public class SpendExtension implements BeforeEachCallback, ParameterResolver{
+public class HttpSpendExtension extends AbstractSpendExtension {
 
-    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(SpendExtension.class);
+    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(HttpSpendExtension.class);
 
     private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .build();
@@ -28,9 +28,9 @@ public class SpendExtension implements BeforeEachCallback, ParameterResolver{
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        SpendApi spendApi = retrofit.create(SpendApi.class);
 
-        CategoryJson category = extensionContext.getStore(CategoryExtension.NAMESPACE).get("category", CategoryJson.class);
+
+        CategoryJson category = extensionContext.getStore(HttpCategoryExtension.NAMESPACE).get("category", CategoryJson.class);
 
         AnnotationSupport.findAnnotation(
                 extensionContext.getRequiredTestMethod(),
@@ -45,12 +45,11 @@ public class SpendExtension implements BeforeEachCallback, ParameterResolver{
                     spend.description(),
                     category.username()
             );
-            try {
-                SpendJson result = spendApi.createSpend(spendJson).execute().body();
-                extensionContext.getStore(NAMESPACE).put("spend", result);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+
+            SpendJson result = createSpend(spendJson);
+            extensionContext.getStore(NAMESPACE).put("spend", result);
+
+
         });
     }
 
@@ -62,6 +61,17 @@ public class SpendExtension implements BeforeEachCallback, ParameterResolver{
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         return extensionContext.getStore(NAMESPACE).get("spend");
+    }
+
+    @Override
+    protected SpendJson createSpend(SpendJson spendJson) {
+        SpendApi spendApi = retrofit.create(SpendApi.class);
+
+        try {
+            return spendApi.createSpend(spendJson).execute().body();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

@@ -1,7 +1,7 @@
 package guru.qa.niffler.jupiter.annotation.meta;
 
-import guru.qa.niffler.jupiter.extension.CategoryExtension;
-import guru.qa.niffler.jupiter.extension.SpendExtension;
+import guru.qa.niffler.jupiter.extension.HttpCategoryExtension;
+import guru.qa.niffler.jupiter.extension.HttpSpendExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.lang.annotation.ElementType;
@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@ExtendWith({CategoryExtension.class,
-        SpendExtension.class
+@ExtendWith({HttpCategoryExtension.class,
+        HttpSpendExtension.class
 
 })
 public @interface WebTest {

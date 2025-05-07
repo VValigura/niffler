@@ -16,12 +16,12 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
 @WebTest
-public class WebSpendingTest {
+public class HttpSpendingTest {
     static final String userNameTest = "TestUser9";
     static final String passwordTest = "Gfhfcnfc";
     static final String descriptionTest = "QA.GURU Advanced 5";
     static final double amountTest = 75000.00;
-    static final String categoryTest = "Обучение";
+    static final String categoryTest = "Обучение2";
 
     static {
         Configuration.browserSize = "1920×1024";

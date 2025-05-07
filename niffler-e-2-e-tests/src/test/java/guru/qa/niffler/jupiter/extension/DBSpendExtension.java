@@ -1,5 +1,6 @@
 package guru.qa.niffler.jupiter.extension;
 
+
 import guru.qa.niffler.data.entity.CategoryEntity;
 import guru.qa.niffler.data.entity.SpendEntity;
 import guru.qa.niffler.data.repository.SpendRepository;
@@ -13,7 +14,7 @@ import org.junit.platform.commons.support.AnnotationSupport;
 
 import java.util.Date;
 
-public class DBSpendExtension implements BeforeEachCallback, ParameterResolver{
+public class DBSpendExtension extends AbstractSpendExtension{
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(DBSpendExtension.class);
 
@@ -30,16 +31,19 @@ public class DBSpendExtension implements BeforeEachCallback, ParameterResolver{
                 Spend.class
         ).ifPresent(spend -> {
             SpendEntity spendEntity = new SpendEntity();
-            spendEntity.setCategory(CategoryEntity.fromJson(category));
+            spendEntity.setCategory(category.id().toString());
             spendEntity.setUsername(category.username());
             spendEntity.setCurrency(spend.currency());
             spendEntity.setSpendDate(new Date());
             spendEntity.setAmount(spend.amount());
             spendEntity.setDescription(spend.description());
+            System.out.println("++++++++++++++++++++++++++++++++++");
+            System.out.println(spendEntity.getCategory());
+            System.out.println("++++++++++++++++++++++++++++++++++");
 
-            spendEntity = spendRepository.createSpend(spendEntity);
+            SpendJson result = createSpend(SpendJson.fromEntity(spendEntity));
 
-            extensionContext.getStore(NAMESPACE).put("spend", SpendJson.fromEntity(spendEntity));
+            extensionContext.getStore(NAMESPACE).put("spend", result);
 
         });
     }
@@ -55,4 +59,11 @@ public class DBSpendExtension implements BeforeEachCallback, ParameterResolver{
     }
 
 
+    @Override
+    protected SpendJson createSpend(SpendJson spendJson) {
+        System.out.println("++++++++++++++++++++++++++++++++++2");
+        System.out.println(spendJson.category());
+        System.out.println("++++++++++++++++++++++++++++++++++2");
+        return SpendJson.fromEntity(spendRepository.createSpend(SpendEntity.fromJson(spendJson)));
+    }
 }

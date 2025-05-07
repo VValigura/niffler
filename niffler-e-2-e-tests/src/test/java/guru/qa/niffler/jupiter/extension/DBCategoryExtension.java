@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.commons.support.AnnotationSupport;
 
-public class DBCategoryExtension implements BeforeEachCallback, AfterEachCallback {
+public class DBCategoryExtension extends AbstractCategoryExtension {
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(DBCategoryExtension.class);
 
@@ -29,8 +29,10 @@ public class DBCategoryExtension implements BeforeEachCallback, AfterEachCallbac
             CategoryEntity categoryEntity = new CategoryEntity();
             categoryEntity.setCategory(cat.category());
             categoryEntity.setUsername(cat.username());
-            categoryEntity = spendRepository.createCategory(categoryEntity);
-            extensionContext.getStore(NAMESPACE).put("category", CategoryJson.fromEntity(categoryEntity));
+
+            CategoryJson categoryJson = createCategory(CategoryJson.fromEntity(categoryEntity));
+
+            extensionContext.getStore(NAMESPACE).put("category", categoryJson);
 
         });
     }
@@ -38,8 +40,19 @@ public class DBCategoryExtension implements BeforeEachCallback, AfterEachCallbac
     @Override
     public void afterEach(ExtensionContext extensionContext) throws Exception {
         CategoryJson category = extensionContext.getStore(NAMESPACE).get("category", CategoryJson.class);
-        if (category != null) {
-            spendRepository.deleteCategory(CategoryEntity.fromJson(category));
+        removeCategory(category);
+
+    }
+
+    @Override
+    protected CategoryJson createCategory(CategoryJson categoryJson) {
+        return CategoryJson.fromEntity(spendRepository.createCategory(CategoryEntity.fromJson(categoryJson)));
+    }
+
+    @Override
+    protected void removeCategory(CategoryJson categoryJson) {
+        if (categoryJson != null) {
+            spendRepository.deleteCategory(CategoryEntity.fromJson(categoryJson));
         }
     }
 }
