@@ -37,9 +37,6 @@ public class DBSpendExtension extends AbstractSpendExtension{
             spendEntity.setSpendDate(new Date());
             spendEntity.setAmount(spend.amount());
             spendEntity.setDescription(spend.description());
-            System.out.println("++++++++++++++++++++++++++++++++++");
-            System.out.println(spendEntity.getCategory());
-            System.out.println("++++++++++++++++++++++++++++++++++");
 
             SpendJson result = createSpend(SpendJson.fromEntity(spendEntity));
 
@@ -61,9 +58,6 @@ public class DBSpendExtension extends AbstractSpendExtension{
 
     @Override
     protected SpendJson createSpend(SpendJson spendJson) {
-        System.out.println("++++++++++++++++++++++++++++++++++2");
-        System.out.println(spendJson.category());
-        System.out.println("++++++++++++++++++++++++++++++++++2");
         return SpendJson.fromEntity(spendRepository.createSpend(SpendEntity.fromJson(spendJson)));
     }
 }

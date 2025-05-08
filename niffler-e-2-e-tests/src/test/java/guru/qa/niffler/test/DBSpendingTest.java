@@ -4,9 +4,11 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import guru.qa.niffler.jupiter.annotation.Category;
 import guru.qa.niffler.jupiter.annotation.Spend;
+import guru.qa.niffler.jupiter.annotation.TestUser;
 import guru.qa.niffler.jupiter.annotation.meta.DBTest;
 import guru.qa.niffler.model.CurrencyValues;
 import guru.qa.niffler.model.SpendJson;
+import guru.qa.niffler.model.UserJson;
 import guru.qa.niffler.page.WelcomePage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +20,8 @@ import static com.codeborne.selenide.Selenide.webdriver;
 
 @DBTest
 public class DBSpendingTest {
-    static final String userNameTest = "TestUserDB2";
-    static final String passwordTest = "Gfhfcnfc";
+    static final String  userNameTest = "jdbcUser5";
+//    static final String passwordTest = "Gfhfcnfc";
     static final String descriptionTest = "QA.GURU Advanced 5";
     static final double amountTest = 75000.00;
     static final String categoryTest = "Обучение3";
@@ -29,11 +31,11 @@ public class DBSpendingTest {
     }
 
     @BeforeEach
-    void doLogin() {
+    void doLogin(UserJson userJson) {
         new WelcomePage().open()
                 .clickLoginBtn()
-                .setUsername(userNameTest)
-                .setPassword(passwordTest)
+                .setUsername(userJson.username())
+                .setPassword(userJson.testData().password())
                 .clickSubmitBtn();
     }
 
@@ -46,6 +48,7 @@ public class DBSpendingTest {
             amount = amountTest,
             currency = CurrencyValues.RUB
     )
+    @TestUser
     @Test
     void spendingShouldBeDeletedAfterTableAction(SpendJson spendJson) {
         $(".main-content").scrollIntoView(false);

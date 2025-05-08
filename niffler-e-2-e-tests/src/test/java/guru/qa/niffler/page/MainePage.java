@@ -9,6 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class MainePage {
     private final SelenideElement friendsBtn = $("li[data-tooltip-id='friends']");
     private final SelenideElement peopleBtn = $("li[data-tooltip-id='people']");
+    private final SelenideElement profileBtn = $("li[data-tooltip-id='profile']");
 
     @Step("Click Friends Button")
     public FriendsPage clickFriendsBtn() {
@@ -20,6 +21,12 @@ public class MainePage {
     public AllPeoplePage clickPeopleBtn() {
         peopleBtn.click();
         return new AllPeoplePage();
+    }
+
+    @Step("Click Profile Button")
+    public ProfilePage clickProfileBtn() {
+        profileBtn.click();
+        return new ProfilePage();
     }
 
 

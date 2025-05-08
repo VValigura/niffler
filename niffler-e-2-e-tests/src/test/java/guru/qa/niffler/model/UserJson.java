@@ -3,6 +3,7 @@ package guru.qa.niffler.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import guru.qa.niffler.data.entity.UserDataEntity;
 
 import java.util.UUID;
 
@@ -33,12 +34,11 @@ public record UserJson(
                         userName,
                         null,
                         null,
-                        null,
+                        CurrencyValues.RUB,
                         null,
                         null,
                         null,
                         new TestData(password)
                 );
         }
-
 }
