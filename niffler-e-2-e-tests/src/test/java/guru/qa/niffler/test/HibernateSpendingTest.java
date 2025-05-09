@@ -6,6 +6,7 @@ import guru.qa.niffler.jupiter.annotation.Category;
 import guru.qa.niffler.jupiter.annotation.Spend;
 import guru.qa.niffler.jupiter.annotation.TestUser;
 import guru.qa.niffler.jupiter.annotation.meta.DBTest;
+import guru.qa.niffler.jupiter.annotation.meta.HibernateTest;
 import guru.qa.niffler.model.CurrencyValues;
 import guru.qa.niffler.model.SpendJson;
 import guru.qa.niffler.model.UserJson;
@@ -18,8 +19,8 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.webdriver;
 
-@DBTest
-public class DBSpendingTest {
+@HibernateTest
+public class HibernateSpendingTest {
     static final String  userNameTest = "jdbcUser5";
 //    static final String passwordTest = "Gfhfcnfc";
     static final String descriptionTest = "QA.GURU Advanced 5";

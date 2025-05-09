@@ -5,26 +5,28 @@ import guru.qa.niffler.data.entity.CategoryEntity;
 import guru.qa.niffler.data.entity.SpendEntity;
 import guru.qa.niffler.data.repository.SpendRepository;
 import guru.qa.niffler.data.repository.SpendRepositoryFactory;
-import guru.qa.niffler.data.repository.SpendRepositoryJdbc;
+import guru.qa.niffler.data.repository.SpendRepositoryHibernate;
 import guru.qa.niffler.jupiter.annotation.Spend;
 import guru.qa.niffler.model.CategoryJson;
 import guru.qa.niffler.model.SpendJson;
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.platform.commons.support.AnnotationSupport;
 
 import java.util.Date;
 
-public class DBSpendExtension extends AbstractSpendExtension{
+public class HibernateSpendExtension extends AbstractSpendExtension{
 
-    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(DBSpendExtension.class);
+    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(HibernateSpendExtension.class);
 
-    private final SpendRepository spendRepository = SpendRepositoryFactory.getSpendRepository();
+    private final SpendRepository spendRepository = new SpendRepositoryHibernate();
 
 
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        CategoryJson category = extensionContext.getStore(DBCategoryExtension.NAMESPACE).get("category", CategoryJson.class);
+        CategoryJson category = extensionContext.getStore(HibernateCategoryExtension.NAMESPACE).get("category", CategoryJson.class);
 
         AnnotationSupport.findAnnotation(
                 extensionContext.getRequiredTestMethod(),

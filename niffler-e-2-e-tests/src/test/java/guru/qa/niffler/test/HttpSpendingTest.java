@@ -21,7 +21,7 @@ public class HttpSpendingTest {
     static final String passwordTest = "Gfhfcnfc";
     static final String descriptionTest = "QA.GURU Advanced 5";
     static final double amountTest = 75000.00;
-    static final String categoryTest = "Обучение2";
+    static final String categoryTest = "Обучение5";
 
     static {
         Configuration.browserSize = "1920×1024";

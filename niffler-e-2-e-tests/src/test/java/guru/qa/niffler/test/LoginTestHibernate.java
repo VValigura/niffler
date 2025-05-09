@@ -1,26 +1,31 @@
 package guru.qa.niffler.test;
 
-import guru.qa.niffler.data.entity.CurrencyValues;
-import guru.qa.niffler.data.entity.UserAuthEntity;
-import guru.qa.niffler.data.entity.UserDataEntity;
+import guru.qa.niffler.data.entity.*;
 import guru.qa.niffler.data.repository.UserRepository;
-import guru.qa.niffler.data.repository.UserRepositorySpring;
+import guru.qa.niffler.data.repository.UserRepositoryHibernate;
 import guru.qa.niffler.jupiter.annotation.meta.DBTest;
 import guru.qa.niffler.page.WelcomePage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @DBTest
-public class LoginTest {
+public class LoginTestHibernate {
 
-    UserRepository userRepository = new UserRepositorySpring();
+    UserRepository userRepository = new UserRepositoryHibernate();
 
-    static final String userNameTest = "jdbcUser5";
+    static final String userNameTest = "jdbcUser8";
     static final String passwordTest = "Gfhfcnfc";
     UserDataEntity userDataEntity;
 
     @BeforeEach
     void createUser(){
+
+        AuthorityEntity read = new AuthorityEntity();
+        read.setAuthority(Authority.read);
+        AuthorityEntity write = new AuthorityEntity();
+        write.setAuthority(Authority.write);
+
+
         UserAuthEntity userAuthEntity = new UserAuthEntity();
         userAuthEntity.setUsername(userNameTest);
         userAuthEntity.setPassword(passwordTest);
@@ -28,8 +33,11 @@ public class LoginTest {
         userAuthEntity.setAccountNonLocked(true);
         userAuthEntity.setCredentialsNonExpired(true);
         userAuthEntity.setEnabled(true);
-        userRepository.createUserInAuth(userAuthEntity);
+        userAuthEntity.addAuthorities(
+                read, write
+        );
 
+        userRepository.createUserInAuth(userAuthEntity);
         userDataEntity = new UserDataEntity();
         userDataEntity.setUsername(userNameTest);
         userDataEntity.setCurrency(CurrencyValues.RUB);

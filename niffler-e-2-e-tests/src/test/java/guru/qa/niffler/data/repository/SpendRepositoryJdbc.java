@@ -61,7 +61,7 @@ public class SpendRepositoryJdbc implements SpendRepository{
             ps.setString(3, spendEntity.getCurrency().toString());
             ps.setDouble(4, spendEntity.getAmount());
             ps.setString(5, spendEntity.getDescription());
-            ps.setObject(6, UUID.fromString(spendEntity.getCategory()));
+            ps.setObject(6, spendEntity.getCategory().getId());
             ps.executeUpdate();
 
             UUID id = null;
