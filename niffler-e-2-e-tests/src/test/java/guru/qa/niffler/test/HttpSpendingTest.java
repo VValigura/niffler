@@ -4,7 +4,6 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import guru.qa.niffler.jupiter.annotation.Category;
 import guru.qa.niffler.jupiter.annotation.Spend;
-import guru.qa.niffler.jupiter.annotation.meta.WebTest;
 import guru.qa.niffler.model.CurrencyValues;
 import guru.qa.niffler.model.SpendJson;
 import guru.qa.niffler.page.WelcomePage;
@@ -15,13 +14,13 @@ import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
-@WebTest
-public class HttpSpendingTest {
+
+public class HttpSpendingTest extends BaseHttpTest {
     static final String userNameTest = "TestUser9";
     static final String passwordTest = "Gfhfcnfc";
     static final String descriptionTest = "QA.GURU Advanced 5";
     static final double amountTest = 75000.00;
-    static final String categoryTest = "Обучение5";
+    static final String categoryTest = "Обучение8";
 
     static {
         Configuration.browserSize = "1920×1024";
@@ -29,7 +28,7 @@ public class HttpSpendingTest {
 
     @BeforeEach
     void doLogin() {
-        new WelcomePage().open()
+        new WelcomePage().open(CFG.frontUrl())
                 .clickLoginBtn()
                 .setUsername(userNameTest)
                 .setPassword(passwordTest)

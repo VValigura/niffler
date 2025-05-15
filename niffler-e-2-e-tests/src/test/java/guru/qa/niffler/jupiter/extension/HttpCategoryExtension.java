@@ -1,8 +1,10 @@
 package guru.qa.niffler.jupiter.extension;
 
 import guru.qa.niffler.api.SpendApi;
+import guru.qa.niffler.api.SpendApiClient;
 import guru.qa.niffler.jupiter.annotation.Category;
 import guru.qa.niffler.model.CategoryJson;
+import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.commons.support.AnnotationSupport;
@@ -13,14 +15,16 @@ public class HttpCategoryExtension extends AbstractCategoryExtension {
 
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(HttpCategoryExtension.class);
 
-    private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .build();
+    private final SpendApiClient spendApiClient = new SpendApiClient();
 
-    private final Retrofit retrofit = new Retrofit.Builder()
-            .client(okHttpClient)
-            .baseUrl("http://127.0.0.1:8093/")
-            .addConverterFactory(JacksonConverterFactory.create())
-            .build();
+//    private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//            .build();
+//
+//    private final Retrofit retrofit = new Retrofit.Builder()
+//            .client(okHttpClient)
+//            .baseUrl("http://127.0.0.1:8093/")
+//            .addConverterFactory(JacksonConverterFactory.create())
+//            .build();
 
 
     @Override
@@ -44,14 +48,19 @@ public class HttpCategoryExtension extends AbstractCategoryExtension {
     }
 
     @Override
+    @SneakyThrows
     protected CategoryJson createCategory(CategoryJson categoryJson) {
-        SpendApi spendApi = retrofit.create(SpendApi.class);
-        try {
-            return spendApi.createCategory(categoryJson).execute().body();
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return spendApiClient.createCategory(categoryJson);
+
+
+//        SpendApi spendApi = retrofit.create(SpendApi.class);
+//        try {
+//            return spendApi.createCategory(categoryJson).execute().body();
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     @Override
