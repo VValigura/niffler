@@ -19,7 +19,7 @@ import org.junit.jupiter.api.parallel.Isolated;
 
 import static com.codeborne.selenide.Selenide.webdriver;
 
-@Isolated
+//@Isolated
 @Order(1)
 @Execution(ExecutionMode.SAME_THREAD)
 @HibernateTest

@@ -62,4 +62,9 @@ public class DBSpendExtension extends AbstractSpendExtension{
     protected SpendJson createSpend(SpendJson spendJson) {
         return SpendJson.fromEntity(spendRepository.createSpend(SpendEntity.fromJson(spendJson)));
     }
+
+    @Override
+    public void afterEach(ExtensionContext context) throws Exception {
+
+    }
 }

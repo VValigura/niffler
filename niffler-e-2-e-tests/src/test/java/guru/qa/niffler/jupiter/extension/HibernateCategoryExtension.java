@@ -51,8 +51,8 @@ public class HibernateCategoryExtension extends AbstractCategoryExtension {
 
     @Override
     protected void removeCategory(CategoryJson categoryJson) {
-        if (categoryJson != null) {
-            spendRepository.deleteCategory(CategoryEntity.fromJson(categoryJson));
-        }
+//        if (categoryJson != null) {
+//            spendRepository.deleteCategory(CategoryEntity.fromJson(categoryJson));
+//        }
     }
 }

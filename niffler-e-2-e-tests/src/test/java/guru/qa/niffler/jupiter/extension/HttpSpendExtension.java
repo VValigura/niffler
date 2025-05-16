@@ -85,4 +85,8 @@ public class HttpSpendExtension extends AbstractSpendExtension {
     }
 
 
+    @Override
+    public void afterEach(ExtensionContext context) throws Exception {
+
+    }
 }
