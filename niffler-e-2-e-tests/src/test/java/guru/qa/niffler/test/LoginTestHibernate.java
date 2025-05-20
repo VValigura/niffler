@@ -13,7 +13,7 @@ public class LoginTestHibernate {
 
     UserRepository userRepository = new UserRepositoryHibernate();
 
-    static final String userNameTest = "jdbcUser8";
+    static final String userNameTest = "jdbcUser13";
     static final String passwordTest = "Gfhfcnfc";
     UserDataEntity userDataEntity;
 

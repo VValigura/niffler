@@ -1,5 +1,6 @@
 package guru.qa.niffler.data.jdbc;
 
+import com.p6spy.engine.spy.P6DataSource;
 import guru.qa.niffler.data.DataBase;
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -19,7 +20,7 @@ public enum DataSourceProvider {
             dataSource.setURL(db.getJdbcURL());
             dataSource.setUser("postgres");
             dataSource.setPassword("secret");
-            return dataSource;
+            return new P6DataSource(dataSource);
         });
     }
 
