@@ -1,2 +1,2 @@
-guru.qa.niffler.jupiter.extension.AllureLogLogsExtension
-guru.qa.niffler.jupiter.extension.AllurePassedAttachmentExtension
+
+guru.qa.niffler.jupiter.extension.ContextExtension

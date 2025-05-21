@@ -16,6 +16,8 @@ public interface Config {
 
     String spendUrl();
 
+    String authUrl();
+
     String dbHost();
 
     default int dbPort() {

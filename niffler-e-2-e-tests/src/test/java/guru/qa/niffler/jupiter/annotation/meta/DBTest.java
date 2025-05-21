@@ -1,8 +1,6 @@
 package guru.qa.niffler.jupiter.annotation.meta;
 
-import guru.qa.niffler.jupiter.extension.DBCategoryExtension;
-import guru.qa.niffler.jupiter.extension.DBSpendExtension;
-import guru.qa.niffler.jupiter.extension.DBCreateUserExtension;
+import guru.qa.niffler.jupiter.extension.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.lang.annotation.ElementType;
@@ -12,9 +10,12 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@ExtendWith({DBCreateUserExtension.class,
+@ExtendWith({
+        BrowserExtension.class,
+        DBCreateUserExtension.class,
         DBCategoryExtension.class,
-        DBSpendExtension.class
+        DBSpendExtension.class,
+        ApiLoginExtension.class
 })
 public @interface DBTest {
 }

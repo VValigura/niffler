@@ -18,6 +18,11 @@ public class DockerConfig implements Config{
     }
 
     @Override
+    public String authUrl() {
+        return "";
+    }
+
+    @Override
     public String dbHost() {
         return "niffler-all-db";
     }
